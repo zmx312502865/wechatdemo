@@ -1,0 +1,18 @@
+
+ <view style='width:100%;' >
+    <scroll-view class="scroll-view_H" scroll-y scroll-x style="width: 100%">
+      <view class='list-item' wx:for="{{list}}"  style='margin:10px auto'>
+        <view class='item-left'>
+           <image  src='{{item.imageUrl}}' style='width:60px;height:60px;margin-left:20px'></image>
+        </view>      
+        <view class='item-right' style='font-size:12px;text-align:center;'>  
+            <view style='margin-top:5px'>
+               <text >{{item.bookName}}</text> 
+             </view>
+           <view style='margin-top:20px'>
+               <text >{{item.createTime}}</text> 
+             </view>
+        </view>
+       </view>
+    </scroll-view>
+  </view>

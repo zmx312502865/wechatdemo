@@ -1,0 +1,36 @@
+{
+  "pages": [
+    "pages/booklist",
+    "pages/index/index",
+    "pages/logs/logs",
+"pages/book/book"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black",
+   "backgroundColor": "#eeeeee",
+    "enablePullDownRefresh":true
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "image/home.png",
+         "selectedIconPath": "image/home.png"
+      },
+      {
+        "pagePath": "pages/booklist",
+        "text": "书本列表",
+         "iconPath": "image/search.png",
+         "selectedIconPath": "image/search.png"
+      }
+    ],
+    "color":"#a9b7b7",
+    "backgroundColor":"#ffffff",
+    "borderStyle":"white",
+    "selectedColor": "#eb4f38"
+  }
+}
