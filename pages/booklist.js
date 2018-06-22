@@ -39,18 +39,12 @@ Page({
         'content-type': 'application/json' // 默认值
       },
       success: function (res) {
-        // that.data.list.push(res.data)
-        // //样这种方式赋值   坑了我一个上午   
+ 
         var cList=that.data.list;
         cList=cList.concat(res.data);
-      //  for(var i=0;i<res.data.length;i++)
-      //  {
-      //    cList.push(res.data[i]);
-      //  }
         that.setData({
           list: cList
         });
-
         wx.stopPullDownRefresh();
       }
     })

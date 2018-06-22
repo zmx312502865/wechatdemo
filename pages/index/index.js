@@ -43,6 +43,7 @@ Page({
         }
       })
     }
+    this.login();
   },
   getUserInfo: function(e) {
     console.log(e)
@@ -52,6 +53,35 @@ Page({
       hasUserInfo: true
     })
  
+  },
+
+  login:function()
+  {
+    wx.login({
+      success: function (res) {
+        if (res.code) {
+          //发起网络请求
+          console.log("code:" + res.code)
+          wx.request({
+            url: 'http://localhost:7777/account/wxlogin', //仅为示例，并非真实的接口地址
+            data: {
+              code: res.code
+            },
+            method: 'POST',
+            header: {
+              // 'content-type': 'application/json' // 默认值
+            },
+            success: function (res) {
+              console.log(res.data.userId)
+              wx.setStorageSync('userId', res.data.userId)
+
+            }
+          })
+        } else {
+          console.log('登录失败！' + res.errMsg)
+        }
+      }
+    });
   },
   redirect:function(e)
   {
@@ -63,7 +93,6 @@ Page({
   {
     wx.scanCode({
       success: (res) => {
-        console.log(res)
         wx.navigateTo({
           url: '../book/book?code=' + res.result
         })

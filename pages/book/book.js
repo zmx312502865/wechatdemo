@@ -5,7 +5,15 @@ Page({
    * 页面的初始数据
    */
   data: {
-    code:""
+     code:"",
+     title:'',
+     author: '',
+     publisher: '',
+     pubdate: '',
+     files:[],
+     tags:[],
+     isbn:'',
+     bookImageUrl:''
   },
 
   /**
@@ -13,58 +21,110 @@ Page({
    */
   onLoad: function (options) {
     console.log(options);
-     this.setData({
-       code:options.code
-     });
-   console.log(this.data.code);
+    //  this.setData({
+    //    code:options.code
+    //  });
+
+     this.getbook(9787111547426);
+     console.log(this.data.code);
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
+  getbook:function(code){
+    var _this=this;
+    wx.request({
+      url: 'http://localhost:7777/book/isbn/'+code, //仅为示例，并非真实的接口地址
+      data: {
+       
+      },
+      method: 'GET',
+      header: {
+         'content-type': 'application/json' 
+      },
+      success: function (res) {
+        var _tags=[];
+        for (var index in res.data.tags) {
+          _tags = _tags.concat(res.data.tags[index].name);
+          if(index>1)
+          break;
+        }
+          _this.setData({
+            title:res.data.title,
+            author: res.data.author[0],
+            publisher: res.data.publisher,
+            pubdate: res.data.pubdate,
+            tags: _tags,
+            isbn: res.data.isbn13
+        });
+      }
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
+  bindDateChange: function (e) {
+    this.setData({
+      pubdate: e.detail.value
+    })
   },
+  save: function () {
+    
+    var formData=this.data;
+    console.log(formData.pubdate);
+    wx.request({
+      url: 'http://localhost:7777/book', //仅为示例，并非真实的接口地址
+      data: JSON.stringify({
+        bookName: formData.title,
+        bookSummary:'',
+        bookAuthor:formData.author,
+        bookAuthorIntro: '',
+        bookPubdate: formData.pubdate,
+        bookISBN: formData.isbn,
+        bookImageUrl: formData.bookImageUrl
+      }),
+      method: 'POST',
+      header: {
+        'content-type': 'application/json',
+        'UserId': '9'    // wx.getStorageSync('userId')
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
+      },
+      success: function (res) {
+        console.log(res.data)
+      }
+    })
   },
+  chooseImage:function(e){
+    var that = this;
+    wx.chooseImage({
+      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+      success: function (res) {
+        var tempFilePaths = res.tempFilePaths
+        wx.uploadFile({
+          url: 'http://localhost:7777/book/image/upload', //仅为示例，非真实的接口地址
+          filePath: tempFilePaths[0],
+          name: 'file',
+          formData: {
+            
+          },
+          success: function (r) {
+             var uploadResut= JSON.parse( r.data);
+            that.setData({
+              bookImageUrl: uploadResut.data
+            });
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+          }
+        })
+        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+        var _files= that.data.files;
+        console.log(_files.length);
+        if(_files.length>0)
+        {
+          _files[0] = res.tempFilePaths;
+        }else{
+          _files=_files.concat(res.tempFilePaths)
+        }
+        that.setData({
+          files: _files
+        });
+      }
+    })
   }
 })
