@@ -1,4 +1,4 @@
-// pages/book/book.js
+const config = require('.././../config.js');
 Page({
 
   /**
@@ -20,12 +20,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options);
+    console.log("codeOPtion"+options);
     //  this.setData({
     //    code:options.code
     //  });
 
-     this.getbook(9787111547426);
+     // this.getbook(9787111547426);
+    this.getbook(options.code);
      console.log(this.data.code);
   },
 
@@ -33,7 +34,7 @@ Page({
   getbook:function(code){
     var _this=this;
     wx.request({
-      url: 'http://localhost:7777/book/isbn/'+code, //仅为示例，并非真实的接口地址
+      url:   config.host+  '/book/isbn/'+code, //仅为示例，并非真实的接口地址
       data: {
        
       },
@@ -67,9 +68,9 @@ Page({
   save: function () {
     
     var formData=this.data;
-    console.log(formData.pubdate);
+    console.log(formData);
     wx.request({
-      url: 'http://localhost:7777/book', //仅为示例，并非真实的接口地址
+      url: config.host + '/book', //仅为示例，并非真实的接口地址
       data: JSON.stringify({
         bookName: formData.title,
         bookSummary:'',
@@ -82,11 +83,14 @@ Page({
       method: 'POST',
       header: {
         'content-type': 'application/json',
-        'UserId': '9'    // wx.getStorageSync('userId')
+        'UserId':  wx.getStorageSync('userId')
 
       },
       success: function (res) {
-        console.log(res.data)
+        console.log(res.data);
+        wx.switchTab({
+          url: '/pages/booklist'
+        })
       }
     })
   },
@@ -98,7 +102,7 @@ Page({
       success: function (res) {
         var tempFilePaths = res.tempFilePaths
         wx.uploadFile({
-          url: 'http://localhost:7777/book/image/upload', //仅为示例，非真实的接口地址
+          url: config.host + '/book/image/upload', //仅为示例，非真实的接口地址
           filePath: tempFilePaths[0],
           name: 'file',
           formData: {

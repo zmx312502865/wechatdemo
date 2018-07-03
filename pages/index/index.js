@@ -1,5 +1,5 @@
-//index.js
-//获取应用实例
+
+const config = require('.././../config.js');
 const app = getApp()
 
 Page({
@@ -63,7 +63,7 @@ Page({
           //发起网络请求
           console.log("code:" + res.code)
           wx.request({
-            url: 'http://localhost:7777/account/wxlogin', //仅为示例，并非真实的接口地址
+            url: config.host+  '/account/wxlogin',  //仅为示例，并非真实的接口地址
             data: {
               code: res.code
             },

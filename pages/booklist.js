@@ -1,4 +1,5 @@
-var order = ['red', 'yellow', 'blue', 'green', 'red']
+const config = require('./../config.js');
+
 Page({
   data: {
     toView: 'red',
@@ -7,6 +8,11 @@ Page({
     list:[]
     
   },
+
+  onLoad: function (options) {
+  
+  },
+
   upper: function (e) {
     console.log(e)
   },
@@ -30,20 +36,23 @@ Page({
     this.setData({
       scrollTop: this.data.scrollTop + 10
     })
+  }, onShow:function(e)
+  {
+    this.onPullDownRefresh();
   },
   onPullDownRefresh: function () {
     var that = this
     wx.request({
-      url: 'http://118.184.218.60/student/', //仅为示例，并非真实的接口地址
+      url: config.host+ '/book/mylist', //仅为示例，并非真实的接口地址
       header: {
-        'content-type': 'application/json' // 默认值
+        'content-type': 'application/json' ,// 默认值
+        'userId':wx.getStorageSync('userId')
       },
       success: function (res) {
- 
-        var cList=that.data.list;
-        cList=cList.concat(res.data);
+      
+       console.log(res);
         that.setData({
-          list: cList
+          list: res.data
         });
         wx.stopPullDownRefresh();
       }
