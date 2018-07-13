@@ -1,0 +1,17 @@
+
+.item{
+ float: left
+
+}
+.item-left{
+  width: 30%;
+  float: left;
+  
+}
+.item-right{
+  width: 70%;
+  float: left;
+}
+.list-item{
+  clear: both;
+}

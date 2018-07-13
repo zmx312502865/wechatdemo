@@ -1,0 +1,19 @@
+/* pages/user.wxss */
+
+
+.item{
+ float: left
+
+}
+.item-left{
+  width: 30%;
+  float: left;
+  
+}
+.item-right{
+  width: 50%;
+  float: left;
+}
+.list-item{
+  clear: both;
+}

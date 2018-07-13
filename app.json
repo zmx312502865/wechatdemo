@@ -3,15 +3,17 @@
     "pages/index/index",
     "pages/booklist",
     "pages/book/book",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/user/userList",
+    "pages/otherBookList/booklist"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#ffffff",
-    "navigationBarTitleText": "WeChat",
+    "navigationBarTitleText": "bookCollection",
     "navigationBarTextStyle": "black",
-   "backgroundColor": "#eeeeee",
-    "enablePullDownRefresh":true
+    "backgroundColor": "#eeeeee",
+    "enablePullDownRefresh": true
   },
   "tabBar": {
     "list": [
@@ -19,18 +21,24 @@
         "pagePath": "pages/index/index",
         "text": "首页",
         "iconPath": "image/home.png",
-         "selectedIconPath": "image/home.png"
+        "selectedIconPath": "image/home.png"
+      },
+      {
+        "pagePath": "pages/user/userList",
+        "text": "朋友",
+        "iconPath": "image/search.png",
+        "selectedIconPath": "image/search.png"
       },
       {
         "pagePath": "pages/booklist",
-        "text": "书本列表",
-         "iconPath": "image/search.png",
-         "selectedIconPath": "image/search.png"
+        "text": "个人",
+        "iconPath": "image/personal.png",
+        "selectedIconPath": "image/personal.png"
       }
     ],
-    "color":"#a9b7b7",
-    "backgroundColor":"#ffffff",
-    "borderStyle":"white",
+    "color": "#a9b7b7",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "white",
     "selectedColor": "#eb4f38"
   }
 }

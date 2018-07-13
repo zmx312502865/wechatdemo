@@ -1,11 +1,7 @@
 
 
-
-
 module.exports={
-
-  host: 'http://192.168.11.104:7777'
-
-
+   //host: 'https://www.iamjoker.cn'
+   host:'http://192.168.10.79:7777'
 }
 

@@ -5,7 +5,6 @@ Page({
    * 页面的初始数据
    */
   data: {
-     code:"",
      title:'',
      author: '',
      publisher: '',
@@ -20,14 +19,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log("codeOPtion"+options);
-    //  this.setData({
-    //    code:options.code
-    //  });
-
-     // this.getbook(9787111547426);
-    this.getbook(options.code);
-     console.log(this.data.code);
+    var requestCode = options.code;
+    if (requestCode != '' && requestCode!=null)
+    {
+      this.getbook(options.code);
+    }
+  
   },
 
 
@@ -87,13 +84,40 @@ Page({
 
       },
       success: function (res) {
-        console.log(res.data);
+        console.log("success:"+res.data);
         wx.switchTab({
           url: '/pages/booklist'
         })
+      },
+      fail:function(res)
+      {
+        console.log("fail:"+res.data);
       }
     })
   },
+
+
+  inputTitle: function (e) {
+    this.setData({
+      title: e.detail.value
+    })
+  }, 
+  inputAuthor: function (e) {
+    this.setData({
+      author: e.detail.value
+    })
+  },
+  inputPublisher: function (e) {
+    this.setData({
+      publisher: e.detail.value
+    })
+  },
+  inputIsbn: function (e) {
+    this.setData({
+      isbn: e.detail.value
+    })
+  },
+
   chooseImage:function(e){
     var that = this;
     wx.chooseImage({
@@ -109,10 +133,15 @@ Page({
             
           },
           success: function (r) {
-             var uploadResut= JSON.parse( r.data);
+           var uploadResut= JSON.parse( r.data);
             that.setData({
               bookImageUrl: uploadResut.data
             });
+            wx.showToast({
+              title: '成功',
+              icon: 'success',
+              duration: 2000
+            })
 
           }
         })
